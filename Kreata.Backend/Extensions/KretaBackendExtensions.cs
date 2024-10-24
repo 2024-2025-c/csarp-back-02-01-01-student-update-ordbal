@@ -22,10 +22,7 @@ namespace Kreata.Backend.Extensions
         }
 
         public static void ConfigureInMemoryContext(this IServiceCollection services)
-
-
         {
-
             string dbNameKretaContext = "Kreta" + Guid.NewGuid();
             services.AddDbContext<KretaContext>
             (
@@ -44,10 +41,11 @@ namespace Kreata.Backend.Extensions
             );
         }
 
-        public static void ConfigureRepos(this IServiceCollection services) 
-        { 
+        public static void ConfigureRepos(this IServiceCollection services)
+        {
             services.AddScoped<IStudentRepo, StudentRepo>();
             services.AddScoped<ITeacherRepo, TeacherRepo>();
+            services.AddScoped<IPlayerRepo, PlayerRepo>();
         }
     }
 }
