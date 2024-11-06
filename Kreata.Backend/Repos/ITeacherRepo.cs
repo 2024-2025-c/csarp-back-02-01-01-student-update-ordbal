@@ -1,4 +1,5 @@
 using Kreata.Backend.Datas.Entities;
+using Kreata.Backend.Datas.Responses;
 
 namespace Kreata.Backend.Repos
 {
@@ -6,5 +7,6 @@ namespace Kreata.Backend.Repos
     {
         Task<List<Teacher>> GetAll();
         Task<Teacher?> GetBy(Guid id);
+        Task<ControllerResponse> UpdateTeacher(Teacher entity);
     }
 }
