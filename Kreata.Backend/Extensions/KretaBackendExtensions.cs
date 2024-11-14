@@ -46,6 +46,8 @@ namespace Kreata.Backend.Extensions
             services.AddScoped<IStudentRepo, StudentRepo>();
             services.AddScoped<ITeacherRepo, TeacherRepo>();
             services.AddScoped<IPlayerRepo, PlayerRepo>();
+            services.AddScoped<IClubRepo, ClubRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
         }
     }
 }

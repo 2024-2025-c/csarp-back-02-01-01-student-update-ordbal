@@ -6,30 +6,30 @@ using System.Numerics;
 
 namespace Kreata.Backend.Repos
 {
-    public class PlayerRepo : IPlayerRepo
+    public class ClubRepo : IClubRepo
     {
         private readonly KretaInMemoryContext _dbContext;
 
-        public PlayerRepo(KretaInMemoryContext dbContext)
+        public ClubRepo(KretaInMemoryContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<Player?> GetBy(Guid id)
+        public async Task<Club?> GetBy(Guid id)
         {
-            return await _dbContext.Players.FirstOrDefaultAsync(s => s.Id == id);
+            return await _dbContext.Clubs.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<List<Player>> GetAll()
+        public async Task<List<Club>> GetAll()
         {
-            return await _dbContext.Players.ToListAsync();
+            return await _dbContext.Clubs.ToListAsync();
         }
 
-        public async Task<ControllerResponse> UpdatePlayerAsync(Player player)
+        public async Task<ControllerResponse> UpdateClubAsync(Club club)
         {
             ControllerResponse response = new ControllerResponse();
             _dbContext.ChangeTracker.Clear();
-            _dbContext.Entry(player).State = EntityState.Modified;
+            _dbContext.Entry(club).State = EntityState.Modified;
             try
             {
                 await _dbContext.SaveChangesAsync();
@@ -37,8 +37,8 @@ namespace Kreata.Backend.Repos
             catch (Exception e)
             {
                 response.AppendNewError(e.Message);
-                response.AppendNewError($"{nameof(PlayerRepo)} osztály, {nameof(UpdatePlayerAsync)} metódusban hiba keletkezett.");
-                response.AppendNewError($"{player} frissítése nem sikerült!");
+                response.AppendNewError($"{nameof(ClubRepo)} osztály, {nameof(UpdateClubAsync)} metódusban hiba keletkezett.");
+                response.AppendNewError($"{club} frissítése nem sikerült!");
             }
             return response;
         }

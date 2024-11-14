@@ -1,7 +1,6 @@
-﻿using Kreata.Backend.Datas.Entities;
-using Kreata.Backend.Datas.Enums;
+﻿using Kreta.Shared.Models.Entities;
+using Kreta.Shared.Models.Enums;
 using Microsoft.EntityFrameworkCore;
-using System.Numerics;
 
 namespace Kreata.Backend.Context
 {
@@ -11,8 +10,7 @@ namespace Kreata.Backend.Context
         {
             List<Student> students = new List<Student>
             {
-                new Student
-                {
+                new Student{
                     Id=Guid.NewGuid(),
                     FirstName="János",
                     LastName="Jegy",
@@ -42,7 +40,7 @@ namespace Kreata.Backend.Context
                     LastName="Matek",
                     BirthsDay=new DateTime(2020,2,2),
                     IsHeadTeacher=true,
-                    IsWoomen=true,
+                    IsWoman=true,
                 },
                 new Teacher
                 {
@@ -51,7 +49,7 @@ namespace Kreata.Backend.Context
                     LastName="Föci",
                     BirthsDay=new DateTime(2010,10,10),
                     IsHeadTeacher=false,
-                    IsWoomen=false,
+                    IsWoman=false,
                 }
             };
 
@@ -75,10 +73,47 @@ namespace Kreata.Backend.Context
                 }
             };
 
+            List<Club> clubs = new List<Club>
+            {
+                new Club
+                {
+                    Id=Guid.NewGuid(),
+                    ClubName="Real Madrid",
+                    Alapitas=new DateTime(1902,3,6),
+                    Edzo="Carlo Ancelotti",
+                },
+                new Club
+                {
+                    Id=Guid.NewGuid(),
+                    ClubName="Barcelona",
+                    Alapitas=new DateTime(1899,11,29),
+                    Edzo="Hans-Dieter Flick",
+                }
+            };
+
+            List<User> users = new List<User>
+            {
+                new User
+                {
+                    Id=Guid.NewGuid(),
+                    UserName="fan01",
+                    BirthsDay=new DateTime(2002,3,6),
+                    Email="fan01@gmail.com",
+                },
+                new User
+                {
+                    Id=Guid.NewGuid(),
+                    UserName="fan02",
+                    BirthsDay=new DateTime(2003,11,29),
+                    Email="fan02@gmail.com",
+                }
+            };
             // Students
             modelBuilder.Entity<Student>().HasData(students);
             modelBuilder.Entity<Teacher>().HasData(teachers);
             modelBuilder.Entity<Player>().HasData(players);
+            modelBuilder.Entity<Club>().HasData(clubs);
+            modelBuilder.Entity<User>().HasData(users);
         }
     }
 }

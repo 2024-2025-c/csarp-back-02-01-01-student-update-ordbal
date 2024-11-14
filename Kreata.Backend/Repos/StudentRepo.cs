@@ -1,6 +1,6 @@
 ﻿using Kreata.Backend.Context;
-using Kreata.Backend.Datas.Entities;
-using Kreata.Backend.Datas.Responses;
+using Kreta.Shared.Models.Entities;
+using Kreta.Shared.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kreata.Backend.Repos
@@ -25,7 +25,7 @@ namespace Kreata.Backend.Repos
             return await _dbContext.Students.ToListAsync();
         }
 
-        public async Task<ControllerResponse> UpdateStudent(Student student)
+        public async Task<ControllerResponse> UpdateStudentAsync(Student student)
         {
             ControllerResponse response = new ControllerResponse();
             _dbContext.ChangeTracker.Clear();
@@ -37,7 +37,7 @@ namespace Kreata.Backend.Repos
             catch (Exception e) 
             {
                 response.AppendNewError(e.Message);
-                response.AppendNewError($"{nameof(StudentRepo)} osztály, {nameof(UpdateStudent)} metódusban hiba keletkezett");
+                response.AppendNewError($"{nameof(StudentRepo)} osztály, {nameof(UpdateStudentAsync)} metódusban hiba keletkezett");
                 response.AppendNewError($"{student} frissítése nem sikerlűlt!");
             }
             return response;

@@ -1,10 +1,10 @@
-﻿using Kreata.Backend.Datas.Enums;
+﻿using Kreta.Shared.Models.Enums;
 
-namespace Kreata.Backend.Datas.Entities
+namespace Kreta.Shared.Models.Entities
 {
     public class Student
     {
-        public Student(Guid id, string firstName, string lastName, DateTime birthsDay, int schoolYear, SchoolClassType schoolClass, string educationLevel,bool isWooman)
+        public Student(Guid id, string firstName, string lastName, DateTime birthsDay, int schoolYear, SchoolClassType schoolClass, string educationLevel,bool isWoman)
         {
             Id = id;
             FirstName = firstName;
@@ -13,10 +13,10 @@ namespace Kreata.Backend.Datas.Entities
             SchoolYear = schoolYear;
             SchoolClass = schoolClass;
             EducationLevel = educationLevel;
-            IsWoomen= isWooman;
+            IsWoman= isWoman;
         }
 
-        public Student(string firstName, string lastName, DateTime birthsDay, int schoolYear, SchoolClassType schoolClass, string educationLevel, bool isWooman)
+        public Student(string firstName, string lastName, DateTime birthsDay, int schoolYear, SchoolClassType schoolClass, string educationLevel, bool isWoman)
         {
             Id = new Guid();
             FirstName = firstName;
@@ -25,7 +25,7 @@ namespace Kreata.Backend.Datas.Entities
             SchoolYear = schoolYear;
             SchoolClass = schoolClass;
             EducationLevel = educationLevel;
-            IsWoomen = isWooman;
+            IsWoman = isWoman;
         }
 
         public Student()
@@ -37,7 +37,7 @@ namespace Kreata.Backend.Datas.Entities
             SchoolYear = 9;
             SchoolClass = SchoolClassType.ClassA;
             EducationLevel = string.Empty;
-            IsWoomen = false;
+            IsWoman = false;
         }
 
         public Guid Id { get; set; }
@@ -47,7 +47,8 @@ namespace Kreata.Backend.Datas.Entities
         public int SchoolYear { get; set; }
         public SchoolClassType SchoolClass { get; set; }
         public string EducationLevel { get; set; }
-        public bool IsWoomen { get; set; }
+        public bool IsWoman { get; set; }
+        public bool IsMan => !IsWoman;
 
         public override string ToString()
         {

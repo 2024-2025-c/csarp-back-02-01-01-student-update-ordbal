@@ -1,6 +1,8 @@
-using Kreata.Backend.Datas.Entities;
-using Kreata.Backend.Datas.Responses;
 using Kreata.Backend.Repos;
+using Kreta.Shared.Assamblers;
+using Kreta.Shared.Dtos;
+using Kreta.Shared.Models.Entities;
+using Kreta.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -22,7 +24,7 @@ public class TeacherController : ControllerBase
         {
             entity = await _teacherRepo.GetBy(id);
             if (entity != null)
-                return Ok(entity);
+                return Ok(entity.ToDto());
         }
         return BadRequest("Az adatok elérhetetlenek!");
     }
@@ -35,17 +37,18 @@ public class TeacherController : ControllerBase
         if (_teacherRepo != null)
         {
             users = await _teacherRepo.GetAll();
-            return Ok(users);
+            List<TeacherDto> teacherDto = users.Select(u => u.ToDto()).ToList();
+            return Ok(teacherDto);
         }
         return BadRequest("Az adatok elérhetetlenek!");
     }
     [HttpPut]
-    public async Task<ActionResult> UpdateTeacherAsync(Teacher entity)
+    public async Task<ActionResult> UpdateTeacherAsync(TeacherDto entity)
     {
         ControllerResponse response = new();
         if (_teacherRepo is not null)
         {
-            response = await _teacherRepo.UpdateTeacher(entity);
+            response = await _teacherRepo.UpdateTeacherAsync(entity.ToModel());
             if (response.HasError)
             {
                 return BadRequest(response);

@@ -1,6 +1,8 @@
-﻿using Kreata.Backend.Datas.Entities;
-using Kreata.Backend.Datas.Responses;
-using Kreata.Backend.Repos;
+﻿using Kreata.Backend.Repos;
+using Kreta.Shared.Assamblers;
+using Kreta.Shared.Dtos;
+using Kreta.Shared.Models.Entities;
+using Kreta.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kreata.Backend.Controllers
@@ -16,20 +18,6 @@ namespace Kreata.Backend.Controllers
             _studentRepo = studentRepo;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SelectAllRecordToListAsync()
-        {
-            List<Student>? users = new();
-
-            if (_studentRepo != null)
-            {
-                users = await _studentRepo.GetAll();
-                return Ok(users);
-            }
-            return BadRequest("Az adatok elérhetetlenek!");
-        }
-
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBy(Guid id)
         {
@@ -38,17 +26,33 @@ namespace Kreata.Backend.Controllers
             {
                 entity = await _studentRepo.GetBy(id);
                 if (entity != null)
-                    return Ok(entity);
+                    return Ok(entity.ToDto());
             }
             return BadRequest("Az adatok elérhetetlenek!");
         }
-        [HttpPut]
-        public async Task<ActionResult> UpdateStudentAsync(Student entity)
+
+        [HttpGet]
+        public async Task<IActionResult> SelectAllRecordToListAsync()
+        {
+            List<Student>? users = new();
+
+            if (_studentRepo != null)
+            {
+                users = await _studentRepo.GetAll();
+                List<StudentDto> studentDto = users.Select(u => u.ToDto()).ToList();
+                return Ok(studentDto);
+            }
+            return BadRequest("Az adatok elérhetetlenek!");
+        }
+
+        [HttpPut()]
+        public async Task<ActionResult> UpdateStudentAsync(StudentDto entity)
         {
             ControllerResponse response = new();
             if (_studentRepo is not null)
             {
-                response = await _studentRepo.UpdateStudent(entity);
+                // response = await _studentRepo.UpdateStudentAsync(StudentAssambler.ToModel( entity));
+                response = await _studentRepo.UpdateStudentAsync(entity.ToModel());
                 if (response.HasError)
                 {
                     return BadRequest(response);
@@ -61,6 +65,5 @@ namespace Kreata.Backend.Controllers
             response.ClearAndAddError("Az adatok frissítés nem lehetséges!");
             return BadRequest(response);
         }
-
     }
 }

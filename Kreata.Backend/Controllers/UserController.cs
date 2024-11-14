@@ -1,30 +1,32 @@
-﻿using Kreta.Shared.Dtos;
+﻿
 using Kreata.Backend.Repos;
 using Kreta.Shared.Assamblers;
+using Kreta.Shared.Dtos;
 using Kreta.Shared.Models.Entities;
 using Kreta.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace Kreata.Backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PlayerController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private IPlayerRepo _playerRepo;
+        private IUserRepo _userRepo;
 
-        public PlayerController(IPlayerRepo playerRepo)
+        public UserController(IUserRepo userRepo)
         {
-            _playerRepo = playerRepo;
+            _userRepo = userRepo;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBy(Guid id)
         {
-            Player? entity = new();
-            if (_playerRepo is not null)
+            User? entity = new();
+            if (_userRepo is not null)
             {
-                entity = await _playerRepo.GetBy(id);
+                entity = await _userRepo.GetBy(id);
                 if (entity != null)
                     return Ok(entity.ToDto());
             }
@@ -34,23 +36,23 @@ namespace Kreata.Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> SelectAllRecordToListAsync()
         {
-            List<Player>? users = new();
+            List<User>? users = new();
 
-            if (_playerRepo != null)
+            if (_userRepo != null)
             {
-                users = await _playerRepo.GetAll();
-                List<PlayerDto> playerDto = users.Select(u => u.ToDto()).ToList();
-                return Ok(playerDto);
+                users = await _userRepo.GetAll();
+                List<UserDto> userDto = users.Select(u => u.ToDto()).ToList();
+                return Ok(userDto);
             }
             return BadRequest("Az adatok elérhetetlenek!");
         }
         [HttpPut]
-        public async Task<ActionResult> UpdatePlayerAsync(PlayerDto entity)
+        public async Task<ActionResult> UpdateClubAsync(UserDto entity)
         {
             ControllerResponse response = new();
-            if (_playerRepo is not null)
+            if (_userRepo is not null)
             {
-                response = await _playerRepo.UpdatePlayerAsync(entity.ToModel());
+                response = await _userRepo.UpdateUserAsync(entity.ToModel());
                 if (response.HasError)
                 {
                     return BadRequest(response);

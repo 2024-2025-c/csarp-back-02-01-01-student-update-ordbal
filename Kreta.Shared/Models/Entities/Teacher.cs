@@ -1,4 +1,4 @@
-namespace Kreata.Backend.Datas.Entities
+namespace Kreta.Shared.Models.Entities
 {
     public class Teacher
     {
@@ -8,7 +8,7 @@ namespace Kreata.Backend.Datas.Entities
             FirstName = string.Empty;
             LastName = string.Empty;
             BirthsDay = new DateTime();
-            IsWoomen = false;
+            IsWoman = false;
             IsHeadTeacher = false;
         }
         public Teacher(string firstName, string lastName, DateTime birthsDay, bool isWoomen, bool isHeadTeacher)
@@ -17,7 +17,7 @@ namespace Kreata.Backend.Datas.Entities
             FirstName = firstName;
             LastName = lastName;
             BirthsDay = birthsDay;
-            IsWoomen = isWoomen;
+            IsWoman = isWoomen;
             IsHeadTeacher = isHeadTeacher;
         }
         public Teacher(Guid id, string firstName, string lastName, DateTime birthsDay, bool isWoomen, bool
@@ -27,14 +27,14 @@ namespace Kreata.Backend.Datas.Entities
             FirstName = firstName;
             LastName = lastName;
             BirthsDay = birthsDay;
-            IsWoomen = isWoomen;
+            IsWoman = isWoomen;
             IsHeadTeacher = isHeadTeacher;
         }
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthsDay { get; set; }
-        public bool IsWoomen { get; set; }
+        public bool IsWoman { get; set; }
         public bool IsHeadTeacher { get; set; }
         public override string ToString()
         {

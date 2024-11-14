@@ -1,9 +1,9 @@
-﻿namespace Kreata.Backend.Datas.Responses
+﻿namespace Kreta.Shared.Models.Responses
 {
     public class ErrorStore
     {
-        public ErrorStore() 
-        { 
+        public ErrorStore()
+        {
             Error = string.Empty;
         }
         public string Error { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
-﻿using Kreata.Backend.Datas.Enums;
+﻿
 
-namespace Kreata.Backend.Datas.Entities
+namespace Kreta.Shared.Models.Entities
 {
     public class Player
     {
