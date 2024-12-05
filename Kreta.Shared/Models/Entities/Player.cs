@@ -26,6 +26,7 @@ namespace Kreta.Shared.Models.Entities
         public string LastName { get; set; }
         public DateTime BirthsDay { get; set; }
         public string Club { get; set; }
+        public bool HasId => Id != Guid.Empty;
 
         public override string ToString()
         {

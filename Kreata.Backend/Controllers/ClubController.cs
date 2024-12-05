@@ -4,6 +4,7 @@ using Kreta.Shared.Dtos;
 using Kreta.Shared.Models.Entities;
 using Kreta.Shared.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Kreta.Shared.Responses;
 using System.Numerics;
 
 namespace Kreata.Backend.Controllers
@@ -62,6 +63,47 @@ namespace Kreata.Backend.Controllers
                 }
             }
             response.ClearAndAddError("Az adatok frissítés nem lehetséges!");
+            return BadRequest(response);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClubAsync(Guid id)
+        {
+            ControllerResponse response = new();
+            if (_clubRepo is not null)
+            {
+                response = await _clubRepo.DeleteClubAsync(id);
+                if (response.HasError)
+                {
+                    Console.WriteLine(response.Error);
+                    response.ClearAndAddError("A klub adatainak törlése nem sikerült!");
+                    return BadRequest(response);
+                }
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            response.ClearAndAddError("Az adatok törlése nem lehetséges!");
+            return BadRequest(response);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> InsertClubAsync(ClubDto club)
+        {
+            ControllerResponse response = new();
+            if (_clubRepo is not null)
+            {
+                response = await _clubRepo.InsertClubAsync(club.ToModel());
+                if (response.HasError)
+                {
+                    Console.WriteLine(response.Error);
+                }
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            response.ClearAndAddError("Az új adatok mentése nem lehetséges!");
             return BadRequest(response);
         }
     }

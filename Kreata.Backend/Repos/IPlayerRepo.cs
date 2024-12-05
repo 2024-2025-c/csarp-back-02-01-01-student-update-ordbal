@@ -10,5 +10,7 @@ namespace Kreata.Backend.Repos
         Task<List<Player>> GetAll();
         Task<Player?> GetBy(Guid id);
         Task<ControllerResponse> UpdatePlayerAsync(Player player);
+        Task<ControllerResponse> DeletePlayerAsync(Guid id);
+        Task<ControllerResponse> InsertPlayerAsync(Player player);
     }
 }

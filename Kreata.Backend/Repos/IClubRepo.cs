@@ -9,5 +9,7 @@ namespace Kreata.Backend.Repos
         Task<List<Club>> GetAll();
         Task<Club?> GetBy(Guid id);
         Task<ControllerResponse> UpdateClubAsync(Club club);
+        Task<ControllerResponse> DeleteClubAsync(Guid id);
+        Task<ControllerResponse> InsertClubAsync(Club club);
     }
 }

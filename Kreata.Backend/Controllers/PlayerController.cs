@@ -63,5 +63,46 @@ namespace Kreata.Backend.Controllers
             response.ClearAndAddError("Az adatok frissítés nem lehetséges!");
             return BadRequest(response);
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePlayerAsync(Guid id)
+        {
+            ControllerResponse response = new();
+            if (_playerRepo is not null)
+            {
+                response = await _playerRepo.DeletePlayerAsync(id);
+                if (response.HasError)
+                {
+                    Console.WriteLine(response.Error);
+                    response.ClearAndAddError("A játékos adatainak törlése nem sikerült!");
+                    return BadRequest(response);
+                }
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            response.ClearAndAddError("Az adatok törlése nem lehetséges!");
+            return BadRequest(response);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> InsertPlayerAsync(PlayerDto player)
+        {
+            ControllerResponse response = new();
+            if (_playerRepo is not null)
+            {
+                response = await _playerRepo.InsertPlayerAsync(player.ToModel());
+                if (response.HasError)
+                {
+                    Console.WriteLine(response.Error);
+                }
+                else
+                {
+                    return Ok(response);
+                }
+            }
+            response.ClearAndAddError("Az új adatok mentése nem lehetséges!");
+            return BadRequest(response);
+        }
     }
 }

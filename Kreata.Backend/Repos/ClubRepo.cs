@@ -42,5 +42,50 @@ namespace Kreata.Backend.Repos
             }
             return response;
         }
+        public async Task<ControllerResponse> DeleteClubAsync(Guid id)
+        {
+            ControllerResponse response = new ControllerResponse();
+            Club? clubToDelete = await GetBy(id);
+            if (clubToDelete == null || clubToDelete == default)
+            {
+                response.AppendNewError($"{id} idével rendelkező klub nem található!");
+                response.AppendNewError("A klub törlése nem sikerült!");
+            }
+            else
+            {
+                _dbContext.ChangeTracker.Clear();
+                _dbContext.Entry(clubToDelete).State = EntityState.Deleted;
+                await _dbContext.SaveChangesAsync();
+            }
+            return response;
+        }
+        public async Task<ControllerResponse> InsertClubAsync(Club club)
+        {
+            if (club.HasId)
+            {
+                return await UpdateClubAsync(club);
+            }
+            else
+            {
+                return await InsertNewItemAsync(club);
+            }
+        }
+        private async Task<ControllerResponse> InsertNewItemAsync(Club club)
+        {
+            ControllerResponse response = new ControllerResponse();
+            try
+            {
+                _dbContext.Clubs.Add(club);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                response.AppendNewError(e.Message);
+                response.AppendNewError($"{nameof(ClubRepo)} osztály, {nameof(InsertNewItemAsync)} metódusban hiba keletkezett");
+                response.AppendNewError($"{club} osztály hozzáadása az adatbázishoz nem sikerült!");
+            }
+            return response;
+        }
+
     }
 }
